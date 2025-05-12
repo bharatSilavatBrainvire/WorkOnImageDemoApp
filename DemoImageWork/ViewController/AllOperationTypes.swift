@@ -28,6 +28,7 @@ enum ImageOperationType: String, CaseIterable {
     case cgContext = "CG Context"
     case coreGraphics = "Core Graphics"
     case compositing = "Compositing"
+    case allInOne = "All in One"
 }
 
 class AllOperationTypes: UIViewController {
@@ -89,6 +90,8 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
             vc = self.storyboard?.instantiateViewController(withIdentifier: "EdgeDetectionViewController")
         case .rotation:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "RotationImageViewController")
+        case .allInOne:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "AllInOneViewController")
         default:
             print("No VC assigned for \(selectedOperation.rawValue)")
         }

@@ -23,6 +23,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     var originalImage: UIImage!
     var ciContext: CIContext!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ciContext = CIContext()
