@@ -208,7 +208,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="622"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OperationCell" id="DoL-u3-Yos" customClass="OperationCell">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="OperationCell" id="DoL-u3-Yos">
                                                 <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DoL-u3-Yos" id="XUa-A7-vnw">
@@ -385,10 +385,10 @@
             </objects>
             <point key="canvasLocation" x="4960" y="-6"/>
         </scene>
-        <!--View Controller-->
+        <!--Core Image View Controller-->
         <scene sceneID="mvq-5R-otl">
             <objects>
-                <viewController id="aB7-Wa-PH5" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CoreImageViewController" id="aB7-Wa-PH5" customClass="CoreImageViewController" customModule="DemoImageWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kYW-0k-Usu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -412,10 +412,10 @@
             </objects>
             <point key="canvasLocation" x="4172" y="685"/>
         </scene>
-        <!--View Controller-->
+        <!--Context Drawing View Controller-->
         <scene sceneID="Wqx-iX-T0j">
             <objects>
-                <viewController id="ZkZ-Fw-klg" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CGContextDrawingViewController" id="ZkZ-Fw-klg" customClass="CGContextDrawingViewController" customModule="DemoImageWork" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sLf-wc-pNI">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

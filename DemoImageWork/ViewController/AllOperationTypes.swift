@@ -83,6 +83,11 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
         // Add other cases as you create their VCs...
         case .coreGraphics:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "CoreGraphicsViewController")
+            
+        case .cgContext:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "CGContextDrawingViewController")
+        case .coreImage:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "CoreImageViewController")
         default:
             print("No VC assigned for \(selectedOperation.rawValue)")
         }
