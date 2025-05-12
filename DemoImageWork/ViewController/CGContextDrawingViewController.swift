@@ -7,48 +7,76 @@
 
 import UIKit
 
+
 class CGContextDrawingViewController: UIViewController {
-    
-    // Setup the view controller
+
+    @IBOutlet weak var contextDrawingView: UIView!
+    var currentDrawingView: UIView?
+
+    let drawingOptions = [
+        "Basic", "Gradient", "Dashed",
+        "Image", "Rotated", "Circle", "Text"
+    ]
+
+    var segmentedControl: UISegmentedControl!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Example 1: Basic Drawing View
-        let basicDrawingView = BasicDrawingView(frame: self.view.bounds)
-        basicDrawingView.backgroundColor = .lightGray
-        self.view.addSubview(basicDrawingView)
-        
-        // Example 2: Gradient Drawing View (uncomment to use)
-        // let gradientDrawingView = GradientDrawingView(frame: self.view.bounds)
-        // gradientDrawingView.backgroundColor = .lightGray
-        // self.view.addSubview(gradientDrawingView)
-        
-        // Example 3: Dashed Line Drawing View (uncomment to use)
-        // let dashedLineDrawingView = DashedLineDrawingView(frame: self.view.bounds)
-        // dashedLineDrawingView.backgroundColor = .lightGray
-        // self.view.addSubview(dashedLineDrawingView)
-        
-        // Example 4: Image Drawing View (uncomment to use)
-        // let imageDrawingView = ImageDrawingView(frame: self.view.bounds)
-        // imageDrawingView.backgroundColor = .lightGray
-        // self.view.addSubview(imageDrawingView)
-        
-        // Example 5: Rotated Shape Drawing View (uncomment to use)
-        // let rotatedShapeView = RotatedShapeView(frame: self.view.bounds)
-        // rotatedShapeView.backgroundColor = .lightGray
-        // self.view.addSubview(rotatedShapeView)
-        
-        // Example 6: Circle with Stroke and Fill Drawing View (uncomment to use)
-        // let circleDrawingView = CircleDrawingView(frame: self.view.bounds)
-        // circleDrawingView.backgroundColor = .lightGray
-        // self.view.addSubview(circleDrawingView)
-        
-        // Example 7: Text Drawing View (uncomment to use)
-        // let textDrawingView = TextDrawingView(frame: self.view.bounds)
-        // textDrawingView.backgroundColor = .lightGray
-        // self.view.addSubview(textDrawingView)
+        setupSegmentedControl()
+        showDrawing(at: 0)
+    }
+
+    private func setupSegmentedControl() {
+        segmentedControl = UISegmentedControl(items: drawingOptions)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(self, action: #selector(segmentChanged(_:)), for: .valueChanged)
+
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(segmentedControl)
+
+        NSLayoutConstraint.activate([
+            segmentedControl.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
+            segmentedControl.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            segmentedControl.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+    }
+
+    @objc private func segmentChanged(_ sender: UISegmentedControl) {
+        showDrawing(at: sender.selectedSegmentIndex)
+    }
+
+    private func showDrawing(at index: Int) {
+        currentDrawingView?.removeFromSuperview()
+
+        let frame = contextDrawingView.bounds
+        let drawingView: UIView
+
+        switch index {
+        case 0: drawingView = BasicDrawingView(frame: frame)
+        case 1: drawingView = GradientDrawingView(frame: frame)
+        case 2: drawingView = DashedLineDrawingView(frame: frame)
+        case 3: drawingView = ImageDrawingView(frame: frame)
+        case 4: drawingView = RotatedShapeView(frame: frame)
+        case 5: drawingView = CircleDrawingView(frame: frame)
+        case 6: drawingView = TextDrawingView(frame: frame)
+        default: return
+        }
+
+        drawingView.translatesAutoresizingMaskIntoConstraints = false
+        drawingView.backgroundColor = .lightGray
+        contextDrawingView.addSubview(drawingView)
+
+        NSLayoutConstraint.activate([
+            drawingView.topAnchor.constraint(equalTo: contextDrawingView.topAnchor),
+            drawingView.bottomAnchor.constraint(equalTo: contextDrawingView.bottomAnchor),
+            drawingView.leadingAnchor.constraint(equalTo: contextDrawingView.leadingAnchor),
+            drawingView.trailingAnchor.constraint(equalTo: contextDrawingView.trailingAnchor)
+        ])
+
+        currentDrawingView = drawingView
     }
 }
+
 
 
 class BasicDrawingView: UIView {
@@ -175,7 +203,7 @@ class ImageDrawingView: UIView {
         context.fill(rect)
         
         // Draw an image
-        if let image = UIImage(named: "exampleImage") {
+        if let image = UIImage(named: "pexels-stephan-ernst-2151845602-31884207") {
             let imageRect = CGRect(x: 50, y: 50, width: 200, height: 200)
             image.draw(in: imageRect)
         }

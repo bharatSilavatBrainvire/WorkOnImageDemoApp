@@ -27,6 +27,7 @@ enum ImageOperationType: String, CaseIterable {
     case imageSave = "Image Save Code"
     case cgContext = "CG Context"
     case coreGraphics = "Core Graphics"
+    case compositing = "Compositing"
 }
 
 class AllOperationTypes: UIViewController {
@@ -57,6 +58,7 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
         let operation = ImageOperationType.allCases[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "OperationCell", for: indexPath)
         cell.textLabel?.text = operation.rawValue
+        cell.selectionStyle = .none
         return cell
     }
     
@@ -66,18 +68,9 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
         var vc: UIViewController?
 
         switch selectedOperation {
-        case .doubleTap, .pinchGestures,.stickers:
+        case .doubleTap, .pinchGestures,.stickers, .taps:
             vc = storyboard?.instantiateViewController(withIdentifier: "GesturesImageVC")
-            
-        case .crop:
-            vc = storyboard?.instantiateViewController(withIdentifier: "CropViewController")
-            
-        case .filters:
-            vc = storyboard?.instantiateViewController(withIdentifier: "FilterViewController")
                  
-        case .imageSave:
-            vc = storyboard?.instantiateViewController(withIdentifier: "SaveImageViewController")
-
         case .layer:
             vc = storyboard?.instantiateViewController(withIdentifier: "LayerEditorViewController")
         // Add other cases as you create their VCs...
@@ -86,8 +79,16 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
             
         case .cgContext:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "CGContextDrawingViewController")
-        case .coreImage:
+        case .coreImage,.imageSave:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "CoreImageViewController")
+        case .compositing, .coordinates:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "ImageEditorViewController")
+        case .frame, .bound:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "FrameBoundVC")
+        case .edges:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "EdgeDetectionViewController")
+        case .rotation:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "RotationImageViewController")
         default:
             print("No VC assigned for \(selectedOperation.rawValue)")
         }

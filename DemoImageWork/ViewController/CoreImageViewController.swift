@@ -53,6 +53,13 @@ class CoreImageViewController: UIViewController {
         applyFilterButton.backgroundColor = .systemBlue
         applyFilterButton.addTarget(self, action: #selector(applyFilter), for: .touchUpInside)
         self.view.addSubview(applyFilterButton)
+        
+        let saveButton = UIButton(frame: CGRect(x: 20, y: 530, width: self.view.frame.width - 40, height: 50))
+        saveButton.setTitle("Save Image", for: .normal)
+        saveButton.backgroundColor = .systemGreen
+        saveButton.addTarget(self, action: #selector(saveImage), for: .touchUpInside)
+        self.view.addSubview(saveButton)
+        
     }
     
     // MARK: - Filter Methods
@@ -86,6 +93,36 @@ class CoreImageViewController: UIViewController {
         // Apply the filter
         applyCoreImageFilter(named: filterName)
     }
+    
+    @objc func saveImage() {
+        guard let imageToSave = imageView.image else {
+            print("No image to save.")
+            return
+        }
+
+        UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+
+    // Completion selector to handle result
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            // Show error message
+            print("Error saving image: \(error.localizedDescription)")
+            showAlert(title: "Save Failed", message: error.localizedDescription)
+        } else {
+            // Show success message
+            print("Image saved successfully.")
+            showAlert(title: "Saved!", message: "Your edited image has been saved to your Photos.")
+        }
+    }
+
+    // Utility to show alert
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+
     
     func applyCoreImageFilter(named filterName: String) {
         // Create the filter

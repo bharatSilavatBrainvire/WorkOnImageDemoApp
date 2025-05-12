@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import Metal
 import MetalKit
 import UIKit
 import Foundation
 
 class ViewController: UIViewController, UINavigationControllerDelegate {
-    
     
     @IBOutlet weak var imageImageView: UIImageView!
     @IBOutlet weak var doneButton: UIButton!
@@ -22,16 +20,45 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var slider4: UISlider!
     @IBOutlet weak var slider5: UISlider!
     
-    var metalProcessor: MetalImageProcessor?
+    var originalImage: UIImage!
+    var ciContext: CIContext!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        metalProcessor = MetalImageProcessor()
+        ciContext = CIContext()
         imageImageView.isUserInteractionEnabled = true
-
-        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch))
-        imageImageView.addGestureRecognizer(pinchGesture)
+        loadImage()
+        
+        // 🎛️ Configure sliders with proper ranges and defaults
+        slider1.minimumValue = 0.0  // Brightness (mapped to -0.5 to +0.5)
+        slider1.maximumValue = 1.0
+        slider1.value = 0.5
+        
+        slider2.minimumValue = 0.5 // Contrast (mapped to ~1.0 to 3.0)
+        slider2.maximumValue = 1.5
+        slider2.value = 1.0
+        
+        slider3.minimumValue = 0.0 // Saturation
+        slider3.maximumValue = 2.0
+        slider3.value = 1.0
+        
+        slider4.minimumValue = -2.0 // Exposure EV
+        slider4.maximumValue = 2.0
+        slider4.value = 0.0
+        
+        slider5.minimumValue = -1.0 // Temperature shift (-1000K to +1000K)
+        slider5.maximumValue = 1.0
+        slider5.value = 0.0
     }
+    
+    func loadImage() {
+        // Load your image here
+        if let image = UIImage(named: "") {
+            originalImage = image
+            imageImageView.image = image
+        }
+    }
+    
     
     
     @IBAction func changeImageButtonAction(_ sender: Any) {
@@ -45,60 +72,59 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBAction func sliderValueChangeAction(_ sender: UISlider) {
         print("sliderValueChangeAction Slider -> \(sender.tag)")
-        
-        guard let originalImage = imageImageView.image else { return }
-        
-        // Create variables to store the values from all sliders
-        var brightness: Float = 0.0
-        var contrast: Float = 1.0
-        var saturation: Float = 1.0
-        var exposure: Float = 1.0
-        var temperature: Float = 0.0
-        
-        // Use slider tags to identify which slider was moved and adjust the properties accordingly
         switch sender.tag {
-        case 101:
-            brightness = sender.value - 0.5
-            debugPrint("brightness -> \(brightness)")
-        case 1022:
-            contrast = sender.value * 2.0 // Adjust contrast (slider range [0, 2])
-            debugPrint("contrast -> \(contrast)")
-        case 103:
-            saturation = sender.value // Adjust saturation (slider range [0, 1])
-            debugPrint("saturation -> \(saturation)")
-        case 104:
-            exposure = sender.value // Adjust exposure (slider range [0, 2])
-            debugPrint("exposure -> \(exposure)")
-        case 105:
-            temperature = sender.value // Adjust temperature (slider range [-1, 1])
-            debugPrint("temperature -> \(temperature)")
-        default:
-            break
-        }
-        
-        // Run Metal processing on a background thread to avoid blocking the main UI thread
-        DispatchQueue.global(qos: .userInitiated).async {
-            // Debug: Print the slider values to ensure they are being passed correctly
-            debugPrint("----> brightness -> \(brightness), contrast -> \(contrast), saturation -> \(saturation), exposure -> \(exposure), temperature -> \(temperature)")
+            case 101:
+                print("Brightness slider moved: \(sender.value)")
+            case 102:
+                print("Contrast slider moved: \(sender.value)")
+            case 103:
+                print("Saturation slider moved: \(sender.value)")
+            case 104:
+                print("Exposure slider moved: \(sender.value)")
+            case 105:
+                print("Temperature slider moved: \(sender.value)")
+            default:
+                break
+            }
             
-            if let output = self.metalProcessor?.process(image: originalImage,
-                                                         brightness: brightness,
-                                                         contrast: contrast,
-                                                         saturation: saturation,
-                                                         exposure: exposure,
-                                                         temperature: temperature) {
-                
-                // Debug: Check if the output is valid
-                debugPrint("----> Output image processed: \(String(describing: output))")
-                
-                // Once processing is done, update the UI on the main thread
-                DispatchQueue.main.async {
-                    
-                    self.imageImageView.image = output
-                    
-                }
-            } else {
-                debugPrint("----> Image processing failed.")
+            // 🛠️ Always apply all filters using all slider values
+            applyFilters()
+        
+    }
+    
+    func applyFilters() {
+        guard let originalImage = originalImage else { return }
+        guard let inputCIImage = CIImage(image: originalImage) else { return }
+
+        // 🎛️ Apply brightness, contrast, saturation together
+        let colorControlsFilter = CIFilter(name: "CIColorControls")!
+        colorControlsFilter.setValue(inputCIImage, forKey: kCIInputImageKey)
+        colorControlsFilter.setValue(slider1.value - 0.5, forKey: kCIInputBrightnessKey) // Brightness
+        colorControlsFilter.setValue(slider2.value * 2.0, forKey: kCIInputContrastKey)   // Contrast
+        colorControlsFilter.setValue(slider3.value, forKey: kCIInputSaturationKey)      // Saturation
+
+        var filteredImage = colorControlsFilter.outputImage
+
+        // 💡 Apply exposure
+        if let exposureFilter = CIFilter(name: "CIExposureAdjust") {
+            exposureFilter.setValue(filteredImage, forKey: kCIInputImageKey)
+            exposureFilter.setValue(slider4.value, forKey: kCIInputEVKey)
+            filteredImage = exposureFilter.outputImage
+        }
+
+        // 🌡️ Apply temperature
+        if let temperatureFilter = CIFilter(name: "CITemperatureAndTint") {
+            temperatureFilter.setValue(filteredImage, forKey: kCIInputImageKey)
+            let neutralValue = CIVector(x: CGFloat(6500 + slider5.value * 1000), y: 0)
+            temperatureFilter.setValue(neutralValue, forKey: "inputNeutral")
+            filteredImage = temperatureFilter.outputImage
+        }
+
+        // 🔄 Convert and display
+        if let finalImage = filteredImage,
+           let cgImage = ciContext.createCGImage(finalImage, from: finalImage.extent) {
+            DispatchQueue.main.async {
+                self.imageImageView.image = UIImage(cgImage: cgImage)
             }
         }
     }
@@ -117,22 +143,23 @@ class ViewController: UIViewController, UINavigationControllerDelegate {
         }
     }
     
-  
-
+    
+    
     @objc func handlePinch(gesture: UIPinchGestureRecognizer) {
         guard let view = gesture.view else { return }
         view.transform = view.transform.scaledBy(x: gesture.scale, y: gesture.scale)
         gesture.scale = 1
     }
-
+    
     
 }
 
 extension ViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            imageImageView.image = selectedImage
+        if let selectedImage = info[.originalImage] as? UIImage {
+            self.originalImage = selectedImage
+            self.imageImageView.image = selectedImage
         }
         
         dismiss(animated: true, completion: nil)
