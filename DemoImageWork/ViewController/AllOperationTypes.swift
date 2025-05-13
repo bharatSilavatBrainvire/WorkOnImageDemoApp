@@ -7,30 +7,6 @@
 
 import UIKit
 
-enum ImageOperationType: String, CaseIterable {
-    case workspace = "Workspace"
-    case stickers = "Stickers"
-    case pinchGestures = "Pinch Gestures"
-    case taps = "Taps"
-    case doubleTap = "Double Tap"
-    case rotation = "Rotation"
-    case scale = "Scale"
-    case layer = "Layer"
-    case crop = "Crop"
-    case edges = "Edges"
-    case filters = "Filters"
-    case bound = "Bound"
-    case frame = "Frame"
-    case srt = "S, R, T"
-    case coordinates = "Coordinates"
-    case coreImage = "Core Image"
-    case imageSave = "Image Save Code"
-    case cgContext = "CG Context"
-    case coreGraphics = "Core Graphics"
-    case compositing = "Compositing"
-    case allInOne = "All in One"
-}
-
 class AllOperationTypes: UIViewController {
     
     var tableView: UITableView!
@@ -92,6 +68,10 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
             vc = self.storyboard?.instantiateViewController(withIdentifier: "RotationImageViewController")
         case .allInOne:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "AllInOneViewController")
+        case .uiTesting:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "UITestingVC")
+        case .mask:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "MaskViewController")
         default:
             print("No VC assigned for \(selectedOperation.rawValue)")
         }

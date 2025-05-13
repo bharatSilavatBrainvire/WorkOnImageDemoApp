@@ -8,6 +8,34 @@
 import Foundation
 import UIKit
 
+//MARK: - Screens Enum
+enum ImageOperationType: String, CaseIterable {
+    case allInOne = "All in One"
+    case workspace = "Workspace"
+    case stickers = "Stickers"
+    case pinchGestures = "Pinch Gestures"
+    case taps = "Taps"
+    case doubleTap = "Double Tap"
+    case rotation = "Rotation"
+    case scale = "Scale"
+    case layer = "Layer"
+    case crop = "Crop"
+    case edges = "Edges"
+    case filters = "Filters"
+    case bound = "Bound"
+    case frame = "Frame"
+    case srt = "S, R, T"
+    case coordinates = "Coordinates"
+    case coreImage = "Core Image"
+    case imageSave = "Image Save Code"
+    case cgContext = "CG Context"
+    case coreGraphics = "Core Graphics"
+    case compositing = "Compositing"
+    case uiTesting = "UI Testing"
+    case mask = "Mask"
+}
+
+//MARK: - Filer Enum
 enum ImageFilter: CaseIterable {
     case crop
     case rotateLeft
@@ -19,6 +47,10 @@ enum ImageFilter: CaseIterable {
     case saturation
     case blur
     case sharpen
+    case addSticker
+    case addText
+    case addFill
+    case spotlight
 
     var name: String {
         switch self {
@@ -32,6 +64,10 @@ enum ImageFilter: CaseIterable {
         case .saturation: return "Saturation"
         case .blur: return "Blur"
         case .sharpen: return "Sharpen"
+        case .addSticker: return "Add Sticker"
+        case .addText: return "Add Text"
+        case .addFill: return "Add Fill"
+        case .spotlight: return "Spotlight"
         }
     }
 
@@ -47,6 +83,10 @@ enum ImageFilter: CaseIterable {
         case .saturation: return "drop"
         case .blur: return "drop.halffull"
         case .sharpen: return "wand.and.stars"
+        case .addSticker: return "face.smiling"
+        case .addText: return "textformat"
+        case .addFill: return "paintbrush.fill"
+        case .spotlight: return "lightbulb.led.wide.fill"
         }
     }
 

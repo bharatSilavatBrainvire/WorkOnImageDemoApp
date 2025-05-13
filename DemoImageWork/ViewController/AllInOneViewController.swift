@@ -23,7 +23,9 @@ class AllInOneViewController: UIViewController {
     @IBOutlet weak var frameLabel: UILabel!
     @IBOutlet weak var boundLabel: UILabel!
     @IBOutlet weak var featureNameLabel: UILabel!
-    
+    @IBOutlet weak var layersButtonAction: UIButton!
+    @IBOutlet weak var imageContainerView: UIView!
+    @IBOutlet weak var undoRedoSegmentControl: UISegmentedControl!
     
     //MARK: - Local variables -
     private let filters = ImageFilter.allCases
@@ -31,6 +33,8 @@ class AllInOneViewController: UIViewController {
     private var currentSelectedFilter: ImageFilter?
     private var ciContext: CIContext!
     private var ciImage: CIImage!
+    private var spotlightLayer: CAShapeLayer!
+    private var spotlightFrame = CGRect(x: 100, y: 200, width: 150, height: 150)
     private var value: Float = 0.0 {
         didSet {
             updateValueLabel()
@@ -44,6 +48,7 @@ class AllInOneViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBasicUI()
+        satupGestures()
     }
     
     @IBAction func pickAnImage(_ sender: UIButton) {
@@ -59,8 +64,13 @@ class AllInOneViewController: UIViewController {
             print("No image to save.")
             return
         }
-        
-        UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        let renderer = UIGraphicsImageRenderer(bounds: imageContainerView.bounds)
+        let flattenedImage = renderer.image { context in
+            imageContainerView.layer.render(in: context.cgContext)
+        }
+        testImageView.image = flattenedImage
+        UIImageWriteToSavedPhotosAlbum(flattenedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        //        UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
     @IBAction func minusButtonAction(_ sender: UIButton) {
@@ -71,6 +81,14 @@ class AllInOneViewController: UIViewController {
     @IBAction func plusButtonAction(_ sender: UIButton) {
         guard let filter = currentSelectedFilter, filter.isAdjustable else { return }
         value = min(filter.maxValue, value + 0.1)
+    }
+    
+    @IBAction func showAllLayersButtonAction(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func undoRedoAction(_ sender: UISegmentedControl) {
+        debugPrint("UndoRedo Tapped")
     }
 }
 
@@ -99,7 +117,6 @@ extension AllInOneViewController: UICollectionViewDelegateFlowLayout {
         value = selectedFilter.isAdjustable ? selectedFilter.defaultValue : 0.0
         updateValueLabel()
         updateFilterUI(for: selectedFilter)
-        applyFilter(selectedFilter)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -115,7 +132,7 @@ extension AllInOneViewController {
         filtersCollectionView.delegate = self
         
         testImageView.isUserInteractionEnabled = true
-        let buttonArray = [pickImageButton,resetButton,downloadButton,minusButton,plusButton]
+        let buttonArray = [pickImageButton,resetButton,downloadButton,minusButton,plusButton,layersButtonAction]
         
         buttonArray.forEach { button in
             button?.layer.cornerRadius = 10
@@ -137,74 +154,178 @@ extension AllInOneViewController {
         currentValueLabel.text = String(format: "%.1f", value)
     }
     
-    private func applyFilter(_ filter: ImageFilter) {
-        guard let originalImage = originalImage else { return }
+    private func satupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        testImageView.addGestureRecognizer(tapGesture)
         
-        var outputImage: CIImage?
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        testImageView.addGestureRecognizer(doubleTapGesture)
+        tapGesture.require(toFail: doubleTapGesture)
         
-        switch filter {
-        case .brightness:
-            let ciFilter = CIFilter(name: "CIColorControls")!
-            ciFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
-            ciFilter.setValue(value - 0.5, forKey: kCIInputBrightnessKey)
-            outputImage = ciFilter.outputImage
-            
-        case .contrast:
-            let ciFilter = CIFilter(name: "CIColorControls")!
-            ciFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
-            ciFilter.setValue(value * 2.0, forKey: kCIInputContrastKey)
-            outputImage = ciFilter.outputImage
-            
-        case .saturation:
-            let ciFilter = CIFilter(name: "CIColorControls")!
-            ciFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
-            ciFilter.setValue(value, forKey: kCIInputSaturationKey)
-            outputImage = ciFilter.outputImage
-            
-        case .blur:
-            let ciFilter = CIFilter(name: "CIGaussianBlur")!
-            ciFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
-            ciFilter.setValue(value, forKey: kCIInputRadiusKey)
-            outputImage = ciFilter.outputImage
-            
-        case .sharpen:
-            let ciFilter = CIFilter(name: "CISharpenLuminance")!
-            ciFilter.setValue(CIImage(image: originalImage), forKey: kCIInputImageKey)
-            ciFilter.setValue(value, forKey: kCIInputSharpnessKey)
-            outputImage = ciFilter.outputImage
-            
-        case .rotateLeft:
-            testImageView.image = testImageView.image?.rotate(radians: -.pi / 2)
-            return
-            
-        case .rotateRight:
-            testImageView.image = testImageView.image?.rotate(radians: .pi / 2)
-            return
-            
-        case .flipHorizontal:
-            testImageView.image = testImageView.image?.flip(horizontal: true)
-            return
-            
-        case .flipVertical:
-            testImageView.image = testImageView.image?.flip(horizontal: false)
-            return
-            
-        case .crop:
-            testImageView.image = cropCenterSquare(testImageView.image ?? originalImage)
-            return
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(_:)))
+        testImageView.addGestureRecognizer(pinchGesture)
+        
+        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotation(_:)))
+        testImageView.addGestureRecognizer(rotationGesture)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
+        testImageView.addGestureRecognizer(panGesture)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleSpotlightPan(_:)))
+        view.addGestureRecognizer(pan)
+        
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handleSpotlightPinch(_:)))
+        view.addGestureRecognizer(pinch)
+        
+        let rotate = UIRotationGestureRecognizer(target: self, action: #selector(handleSpotlightRotation(_:)))
+        view.addGestureRecognizer(rotate)
+        
+    }
+    
+    private func setupHollowMask() {
+        let overlay = UIView(frame: view.bounds)
+        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        overlay.isUserInteractionEnabled = false // Allow touches to pass through
+        view.addSubview(overlay)
+
+        spotlightLayer = CAShapeLayer()
+        spotlightLayer.fillRule = .evenOdd
+        overlay.layer.mask = spotlightLayer
+        updateSpotlightMask()
+    }
+    
+    private func updateSpotlightMask() {
+        let path = UIBezierPath(rect: view.bounds)
+        
+        let shapeValue = (spotlightFrame.width == spotlightFrame.height) ? "circle" : "rectangle"
+        
+        if shapeValue == "circle" {
+            path.append(UIBezierPath(ovalIn: spotlightFrame))
+        } else {
+            path.append(UIBezierPath(rect: spotlightFrame))
         }
         
-        if let finalCIImage = outputImage,
-           let cgImage = CIContext().createCGImage(finalCIImage, from: finalCIImage.extent) {
+        spotlightLayer.path = path.cgPath
+    }
+
+
+    
+    private func applyFilter(_ filter: ImageFilter) {
+        guard let baseImage = testImageView.image else { return }
+        
+        switch filter {
+        case .rotateLeft:
+            testImageView.image = baseImage.rotate(radians: -.pi / 2)
+            return
+        case .rotateRight:
+            testImageView.image = baseImage.rotate(radians: .pi / 2)
+            return
+        case .flipHorizontal:
+            testImageView.image = baseImage.flip(horizontal: true)
+            return
+        case .flipVertical:
+            testImageView.image = baseImage.flip(horizontal: false)
+            return
+        case .crop:
+            testImageView.image = cropCenterSquare(baseImage)
+            return
+        case .addSticker:
+            addSticker(named: "drawing-tablet")
+            return
+        case .addFill, .addText:
+            print("fill or text not implemented")
+            return
+        case .spotlight:
+            return setupHollowMask()
+        default:
+            break
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let ciInputImage = CIImage(image: baseImage) else { return }
+            
+            var outputImage: CIImage?
+            
+            switch filter {
+            case .brightness:
+                let ciFilter = CIFilter(name: "CIColorControls")!
+                ciFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+                ciFilter.setValue(self.value - 0.5, forKey: kCIInputBrightnessKey)
+                outputImage = ciFilter.outputImage
+                
+            case .contrast:
+                let ciFilter = CIFilter(name: "CIColorControls")!
+                ciFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+                ciFilter.setValue(self.value * 2.0, forKey: kCIInputContrastKey)
+                outputImage = ciFilter.outputImage
+                
+            case .saturation:
+                let ciFilter = CIFilter(name: "CIColorControls")!
+                ciFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+                ciFilter.setValue(self.value, forKey: kCIInputSaturationKey)
+                outputImage = ciFilter.outputImage
+                
+            case .blur:
+                let ciFilter = CIFilter(name: "CIGaussianBlur")!
+                ciFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+                ciFilter.setValue(self.value, forKey: kCIInputRadiusKey)
+                outputImage = ciFilter.outputImage
+                
+            case .sharpen:
+                let ciFilter = CIFilter(name: "CISharpenLuminance")!
+                ciFilter.setValue(ciInputImage, forKey: kCIInputImageKey)
+                ciFilter.setValue(self.value, forKey: kCIInputSharpnessKey)
+                outputImage = ciFilter.outputImage
+                
+            default:
+                return
+            }
+            
+            guard let finalCIImage = outputImage,
+                  let cgImage = CIContext().createCGImage(finalCIImage, from: finalCIImage.extent) else {
+                return
+            }
+            
             let finalUIImage = UIImage(cgImage: cgImage)
-            self.testImageView.image = finalUIImage
+            
+            DispatchQueue.main.async {
+                self.testImageView.image = finalUIImage
+            }
         }
     }
     
+    
     private func resetAllFilter() {
-        ciImage = CIImage(image: originalImage)!
-        updateImageView(with: ciImage)
+        DispatchQueue.main.async {
+            self.view.isUserInteractionEnabled = false
+        }
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let newCIImage = CIImage(image: self.originalImage),
+                  let cgImage = self.ciContext.createCGImage(newCIImage, from: newCIImage.extent) else {
+                return
+            }
+            
+            let filteredImage = UIImage(cgImage: cgImage)
+            
+            DispatchQueue.main.async {
+                self.testImageView.image = filteredImage
+                self.plusMinusLabelBackView.isHidden = true
+                self.frameBoundFilterNamebackView.isHidden = true
+                self.testImageView.layoutIfNeeded()
+                self.view.isUserInteractionEnabled = true
+                
+                self.spotlightFrame = CGRect(x: 100, y: 150, width: 200, height: 200)
+                self.spotlightLayer.mask = nil
+                self.spotlightLayer.isHidden = true
+            }
+            
+            self.ciImage = newCIImage
+            self.currentSelectedFilter = nil
+        }
     }
+    
     
     private func updateImageView(with ciImage: CIImage) {
         guard let cgImage = ciContext.createCGImage(ciImage, from: ciImage.extent) else {
@@ -217,17 +338,147 @@ extension AllInOneViewController {
     }
     
     private func updateFilterUI(for filter: ImageFilter) {
-        if filter.isAdjustable {
-            plusMinusLabelBackView.isHidden = false
-            frameBoundFilterNamebackView.isHidden = true
-        } else {
-            plusMinusLabelBackView.isHidden = true
-            frameBoundFilterNamebackView.isHidden = false
-            
-            featureNameLabel.text = filter.name
-            frameLabel.text = "Frame: \(testImageView.frame)"
-            boundLabel.text = "Bounds: \(testImageView.bounds)"
+        DispatchQueue.main.async {
+            if filter.isAdjustable {
+                self.plusMinusLabelBackView.isHidden = false
+                self.frameBoundFilterNamebackView.isHidden = true
+            } else {
+                self.plusMinusLabelBackView.isHidden = true
+                self.frameBoundFilterNamebackView.isHidden = false
+                self.featureNameLabel.text = filter.name
+                self.frameLabel.text = "Frame: \(self.testImageView.frame)"
+                self.boundLabel.text = "Bounds: \(self.testImageView.bounds)"
+            }
         }
+    }
+    
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+    
+    private func addSticker(named imageName: String) {
+        print("addSticker called")
+        guard let stickerImage = UIImage(named: imageName) else { return }
+        
+        let stickerImageView = UIImageView(image: stickerImage)
+        stickerImageView.isUserInteractionEnabled = true
+        stickerImageView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(handleStickerPan(_:)))
+        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handleStickerPinch(_:)))
+        let rotate = UIRotationGestureRecognizer(target: self, action: #selector(handleStickerRotate(_:)))
+        
+        stickerImageView.addGestureRecognizer(pan)
+        stickerImageView.addGestureRecognizer(pinch)
+        stickerImageView.addGestureRecognizer(rotate)
+        self.imageContainerView.addSubview(stickerImageView)
+    }
+    
+}
+
+//MARK: - Objective C methods -
+extension AllInOneViewController {
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            print("Error saving image: \(error.localizedDescription)")
+            showAlert(title: "Save Failed", message: error.localizedDescription)
+        } else {
+            print("Image saved successfully.")
+            showAlert(title: "Saved!", message: "Your edited image has been saved to your Photos.")
+        }
+    }
+    
+    // MARK: - Sticker Gesture Handlers
+    @objc func handleStickerPan(_ gesture: UIPanGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        let translation = gesture.translation(in: self.view)
+        view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+        gesture.setTranslation(.zero, in: self.view)
+        featureNameLabel.text = "Sticker Drag"
+    }
+    
+    @objc func handleStickerPinch(_ gesture: UIPinchGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        view.transform = view.transform.scaledBy(x: gesture.scale, y: gesture.scale)
+        gesture.scale = 1
+        featureNameLabel.text = "Sticker Pinch"
+    }
+    
+    @objc func handleStickerRotate(_ gesture: UIRotationGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        view.transform = view.transform.rotated(by: gesture.rotation)
+        gesture.rotation = 0
+        featureNameLabel.text = "Sticker Rotate"
+    }
+    
+    @objc func handleTap(_ gesture: UITapGestureRecognizer) {
+        featureNameLabel.text = "Tap"
+        print("Single tap detected")
+    }
+    
+    @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
+        featureNameLabel.text = "Double Tap"
+        print("Double tap detected")
+        testImageView.transform = .identity
+    }
+    
+    @objc func handlePinch(_ gesture: UIPinchGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        view.transform = view.transform.scaledBy(x: gesture.scale, y: gesture.scale)
+        gesture.scale = 1
+        featureNameLabel.text = "Pinch/Scal"
+        
+    }
+    
+    @objc func handleRotation(_ gesture: UIRotationGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        view.transform = view.transform.rotated(by: gesture.rotation)
+        gesture.rotation = 0
+        featureNameLabel.text = "Rotation"
+    }
+    
+    @objc func handlePan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: gesture.view?.superview)
+        if let view = gesture.view {
+            view.center = CGPoint(x: view.center.x + translation.x, y: view.center.y + translation.y)
+        }
+        gesture.setTranslation(.zero, in: gesture.view?.superview)
+        featureNameLabel.text = "Pan / Drag"
+    }
+    
+    @objc func handleSpotlightPan(_ gesture: UIPanGestureRecognizer) {
+        let translation = gesture.translation(in: view)
+        
+        spotlightFrame.origin.x += translation.x
+        spotlightFrame.origin.y += translation.y
+        
+        gesture.setTranslation(.zero, in: view)
+        
+        updateSpotlightMask()
+    }
+
+    @objc func handleSpotlightPinch(_ gesture: UIPinchGestureRecognizer) {
+        let scale = gesture.scale
+        
+        spotlightFrame.size.width *= scale
+        spotlightFrame.size.height *= scale
+        
+        gesture.scale = 1.0
+        
+        updateSpotlightMask()
+    }
+
+    @objc func handleSpotlightRotation(_ gesture: UIRotationGestureRecognizer) {
+        let rotation = gesture.rotation
+        
+        spotlightFrame = spotlightFrame.applying(CGAffineTransform(rotationAngle: rotation))
+        
+        gesture.rotation = 0
+        
+        updateSpotlightMask()
     }
 }
 
@@ -251,7 +502,9 @@ extension AllInOneViewController: UINavigationControllerDelegate, UIImagePickerC
         
         if let selectedImage = info[.originalImage] as? UIImage {
             self.originalImage = selectedImage
-            self.testImageView.image = selectedImage
+            DispatchQueue.main.async {
+                self.testImageView.image = selectedImage
+            }
         }
         
         dismiss(animated: true, completion: nil)
@@ -259,24 +512,5 @@ extension AllInOneViewController: UINavigationControllerDelegate, UIImagePickerC
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
-    }
-}
-
-//MARK: - Objective C function -
-extension AllInOneViewController {
-    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            print("Error saving image: \(error.localizedDescription)")
-            showAlert(title: "Save Failed", message: error.localizedDescription)
-        } else {
-            print("Image saved successfully.")
-            showAlert(title: "Saved!", message: "Your edited image has been saved to your Photos.")
-        }
-    }
-    
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
     }
 }
