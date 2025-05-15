@@ -7,35 +7,32 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A7259E982DD5CFFF00371CA3 /* Task1.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Task1.xcodeproj; sourceTree = "<group>"; };
-		A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoImageWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7C7C36B2DD6177700C87178 /* Task1.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Task1.xcodeproj; sourceTree = "<group>"; };
-		A7E53F6D2DD471C1004677C6 /* Task1.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Task1.xcodeproj; sourceTree = "<group>"; };
+		A7C7C3F02DD6214900C87178 /* Filters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A73FAE9F2DCDFB630080F60B /* Exceptions for "DemoImageWork" folder in "DemoImageWork" target */ = {
+		A7C7C4022DD6214B00C87178 /* Exceptions for "Filters" folder in "Filters" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = A73FAE8C2DCDFB610080F60B /* DemoImageWork */;
+			target = A7C7C3EF2DD6214900C87178 /* Filters */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A73FAE8F2DCDFB610080F60B /* DemoImageWork */ = {
+		A7C7C3F22DD6214900C87178 /* Filters */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				A73FAE9F2DCDFB630080F60B /* Exceptions for "DemoImageWork" folder in "DemoImageWork" target */,
+				A7C7C4022DD6214B00C87178 /* Exceptions for "Filters" folder in "Filters" target */,
 			);
-			path = DemoImageWork;
+			path = Filters;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A73FAE8A2DCDFB610080F60B /* Frameworks */ = {
+		A7C7C3ED2DD6214900C87178 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -45,39 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A7259EBA2DD5CFFF00371CA3 /* Products */ = {
+		A7C7C3E72DD6214900C87178 = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A73FAE842DCDFB610080F60B = {
-			isa = PBXGroup;
-			children = (
-				A73FAE8F2DCDFB610080F60B /* DemoImageWork */,
-				A73FAE8E2DCDFB610080F60B /* Products */,
+				A7C7C3F22DD6214900C87178 /* Filters */,
+				A7C7C3F12DD6214900C87178 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A73FAE8E2DCDFB610080F60B /* Products */ = {
+		A7C7C3F12DD6214900C87178 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A7C7C38D2DD6177700C87178 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A7E53F6F2DD471C1004677C6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
+				A7C7C3F02DD6214900C87178 /* Filters.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,78 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A73FAE8C2DCDFB610080F60B /* DemoImageWork */ = {
+		A7C7C3EF2DD6214900C87178 /* Filters */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A73FAEA02DCDFB630080F60B /* Build configuration list for PBXNativeTarget "DemoImageWork" */;
+			buildConfigurationList = A7C7C4032DD6214B00C87178 /* Build configuration list for PBXNativeTarget "Filters" */;
 			buildPhases = (
-				A73FAE892DCDFB610080F60B /* Sources */,
-				A73FAE8A2DCDFB610080F60B /* Frameworks */,
-				A73FAE8B2DCDFB610080F60B /* Resources */,
+				A7C7C3EC2DD6214900C87178 /* Sources */,
+				A7C7C3ED2DD6214900C87178 /* Frameworks */,
+				A7C7C3EE2DD6214900C87178 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A73FAE8F2DCDFB610080F60B /* DemoImageWork */,
+				A7C7C3F22DD6214900C87178 /* Filters */,
 			);
-			name = DemoImageWork;
+			name = Filters;
 			packageProductDependencies = (
 			);
-			productName = DemoImageWork;
-			productReference = A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */;
+			productName = Filters;
+			productReference = A7C7C3F02DD6214900C87178 /* Filters.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A73FAE852DCDFB610080F60B /* Project object */ = {
+		A7C7C3E82DD6214900C87178 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					A73FAE8C2DCDFB610080F60B = {
+					A7C7C3EF2DD6214900C87178 = {
 						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
-			buildConfigurationList = A73FAE882DCDFB610080F60B /* Build configuration list for PBXProject "DemoImageWork" */;
+			buildConfigurationList = A7C7C3EB2DD6214900C87178 /* Build configuration list for PBXProject "Filters" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = A73FAE842DCDFB610080F60B;
+			mainGroup = A7C7C3E72DD6214900C87178;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = A73FAE8E2DCDFB610080F60B /* Products */;
+			productRefGroup = A7C7C3F12DD6214900C87178 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A7C7C38D2DD6177700C87178 /* Products */;
-					ProjectRef = A7C7C36B2DD6177700C87178 /* Task1.xcodeproj */;
-				},
-				{
-					ProductGroup = A7E53F6F2DD471C1004677C6 /* Products */;
-					ProjectRef = A7E53F6D2DD471C1004677C6 /* Task1.xcodeproj */;
-				},
-				{
-					ProductGroup = A7259EBA2DD5CFFF00371CA3 /* Products */;
-					ProjectRef = A7259E982DD5CFFF00371CA3 /* Task1.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				A73FAE8C2DCDFB610080F60B /* DemoImageWork */,
+				A7C7C3EF2DD6214900C87178 /* Filters */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A73FAE8B2DCDFB610080F60B /* Resources */ = {
+		A7C7C3EE2DD6214900C87178 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -166,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A73FAE892DCDFB610080F60B /* Sources */ = {
+		A7C7C3EC2DD6214900C87178 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -176,7 +138,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A73FAEA12DCDFB630080F60B /* Debug */ = {
+		A7C7C4042DD6214B00C87178 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -185,21 +147,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 27599AU3D6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoImageWork/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow app to access image to work upon";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow";
+				INFOPLIST_FILE = Filters/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.DemoImageWork;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.Filters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -207,7 +166,7 @@
 			};
 			name = Debug;
 		};
-		A73FAEA22DCDFB630080F60B /* Release */ = {
+		A7C7C4052DD6214B00C87178 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -216,21 +175,18 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 27599AU3D6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoImageWork/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow app to access image to work upon";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow";
+				INFOPLIST_FILE = Filters/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.DemoImageWork;
+				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.Filters;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -238,7 +194,7 @@
 			};
 			name = Release;
 		};
-		A73FAEA32DCDFB630080F60B /* Debug */ = {
+		A7C7C4062DD6214B00C87178 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -302,7 +258,7 @@
 			};
 			name = Debug;
 		};
-		A73FAEA42DCDFB630080F60B /* Release */ = {
+		A7C7C4072DD6214B00C87178 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -362,25 +318,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A73FAE882DCDFB610080F60B /* Build configuration list for PBXProject "DemoImageWork" */ = {
+		A7C7C3EB2DD6214900C87178 /* Build configuration list for PBXProject "Filters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A73FAEA32DCDFB630080F60B /* Debug */,
-				A73FAEA42DCDFB630080F60B /* Release */,
+				A7C7C4062DD6214B00C87178 /* Debug */,
+				A7C7C4072DD6214B00C87178 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A73FAEA02DCDFB630080F60B /* Build configuration list for PBXNativeTarget "DemoImageWork" */ = {
+		A7C7C4032DD6214B00C87178 /* Build configuration list for PBXNativeTarget "Filters" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A73FAEA12DCDFB630080F60B /* Debug */,
-				A73FAEA22DCDFB630080F60B /* Release */,
+				A7C7C4042DD6214B00C87178 /* Debug */,
+				A7C7C4052DD6214B00C87178 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A73FAE852DCDFB610080F60B /* Project object */;
+	rootObject = A7C7C3E82DD6214900C87178 /* Project object */;
 }

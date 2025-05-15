@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     //MARK: - Local variables -
     private var originalImage: UIImage!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUIForScreen()
@@ -63,14 +62,48 @@ extension ViewController {
         let stickerImageView = UIImageView(image: stickerImage)
         stickerImageView.isUserInteractionEnabled = true
         stickerImageView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
-        stickerImageView.layer.cornerRadius = 10
-        stickerImageView.layer.borderWidth = 2
-        stickerImageView.layer.borderColor = UIColor.red.cgColor
+        
+        // --- Draw the rectangular outline with corner circles ---
+        let outlineLayer = CAShapeLayer()
+        outlineLayer.strokeColor = UIColor.blue.cgColor
+        outlineLayer.fillColor = UIColor.clear.cgColor
+        outlineLayer.lineWidth = 2
+        stickerImageView.layer.addSublayer(outlineLayer) // Add to the sticker's layer
+        
+        let rectanglePath = UIBezierPath(rect: stickerImageView.bounds) // Use bounds for local coordinates
+        outlineLayer.path = rectanglePath.cgPath
+        
+        // Define the corner points of the rectangle
+        let topLeft = CGPoint(x: stickerImageView.bounds.minX, y: stickerImageView.bounds.minY)
+        let topRight = CGPoint(x: stickerImageView.bounds.maxX, y: stickerImageView.bounds.minY)
+        let bottomLeft = CGPoint(x: stickerImageView.bounds.minX, y: stickerImageView.bounds.maxY)
+        let bottomRight = CGPoint(x: stickerImageView.bounds.maxX, y: stickerImageView.bounds.maxY)
+        
+        let cornerPoints = [topLeft, topRight, bottomRight, bottomLeft]
+        let circleRadius: CGFloat = 6
+        let circleStrokeColor = UIColor.green.cgColor
+        let circleLineWidth: CGFloat = 2
+        
+        for center in cornerPoints {
+            let circlePath = UIBezierPath(
+                arcCenter: center,
+                radius: circleRadius,
+                startAngle: 0,
+                endAngle: 2 * CGFloat.pi,
+                clockwise: true
+            )
+            
+            let circleLayer = CAShapeLayer()
+            circleLayer.path = circlePath.cgPath
+            circleLayer.fillColor = UIColor.clear.cgColor
+            circleLayer.strokeColor = circleStrokeColor
+            circleLayer.lineWidth = circleLineWidth
+            stickerImageView.layer.addSublayer(circleLayer) // Add each circle layer to the sticker's layer
+        }
         
         let deleteStickerButton = UIButton(frame: CGRect(x: 4, y: 4, width: 20, height: 20))
         deleteStickerButton.setImage(UIImage(systemName: "xmark.bin.circle"), for: .normal)
         deleteStickerButton.addTarget(self, action: #selector(deleteSticker), for: .touchUpInside)
-        
         
         let pan = UIPanGestureRecognizer(target: self, action: #selector(handleStickerPan(_:)))
         let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handleStickerPinch(_:)))
@@ -88,7 +121,6 @@ extension ViewController {
         
         stickerImageView.addSubview(deleteStickerButton)
         self.testingImageView.addSubview(stickerImageView)
-        
     }
     
     private func setupGestures() {
@@ -125,6 +157,7 @@ extension ViewController {
         
         // Calculate current scale from transform
         let currentScaleX = sqrt(view.transform.a * view.transform.a + view.transform.c * view.transform.c)
+        
         // Adjust border width to visually stay the same
         if let imageView = view as? UIImageView {
             let originalBorderWidth: CGFloat = 2
@@ -199,7 +232,7 @@ extension ViewController {
     }
     
     @objc func deleteSticker(_ sender: UIButton) {
-        sender.removeFromSuperview()
+        
     }
     
 }
@@ -309,3 +342,4 @@ extension ViewController {
         return UIImage(cgImage: resultCGImage)
     }
 }
+
