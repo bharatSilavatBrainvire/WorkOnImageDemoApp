@@ -64,6 +64,7 @@ class AllInOneViewController: UIViewController {
             print("No image to save.")
             return
         }
+        
         let renderer = UIGraphicsImageRenderer(bounds: imageContainerView.bounds)
         let flattenedImage = renderer.image { context in
             imageContainerView.layer.render(in: context.cgContext)

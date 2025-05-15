@@ -33,6 +33,8 @@ enum ImageOperationType: String, CaseIterable {
     case compositing = "Compositing"
     case uiTesting = "UI Testing"
     case mask = "Mask"
+    case transform = "Transform"
+    case metalKit = "Metal/Blend"
 }
 
 //MARK: - Filer Enum
@@ -51,6 +53,7 @@ enum ImageFilter: CaseIterable {
     case addText
     case addFill
     case spotlight
+    
 
     var name: String {
         switch self {

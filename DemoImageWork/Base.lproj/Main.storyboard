@@ -828,6 +828,36 @@
             </objects>
             <point key="canvasLocation" x="7245" y="685"/>
         </scene>
+        <!--Metal Kit BlendingVC-->
+        <scene sceneID="eaf-2U-aU0">
+            <objects>
+                <viewController storyboardIdentifier="MetalKitBlendingVC" id="ZBD-n2-u5T" customClass="MetalKitBlendingVC" customModule="DemoImageWork" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6ss-aM-9mm">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2rf-p6-mtH">
+                                <rect key="frame" x="0.0" y="118" width="393" height="666"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="k6J-Jy-Nar"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="2rf-p6-mtH" firstAttribute="leading" secondItem="k6J-Jy-Nar" secondAttribute="leading" id="OBb-gk-oIA"/>
+                            <constraint firstItem="2rf-p6-mtH" firstAttribute="top" secondItem="k6J-Jy-Nar" secondAttribute="top" id="m3C-z2-DDR"/>
+                            <constraint firstItem="k6J-Jy-Nar" firstAttribute="bottom" secondItem="2rf-p6-mtH" secondAttribute="bottom" id="qvO-h8-qXd"/>
+                            <constraint firstItem="k6J-Jy-Nar" firstAttribute="trailing" secondItem="2rf-p6-mtH" secondAttribute="trailing" id="r5m-M9-iUT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="testingBackView" destination="2rf-p6-mtH" id="IPG-id-bSx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ISP-10-Ivf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8062" y="685"/>
+        </scene>
         <!--Core Graphics View Controller-->
         <scene sceneID="SXO-j3-d08">
             <objects>
@@ -899,6 +929,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="at1-s9-Qtp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7244" y="-6"/>
+        </scene>
+        <!--Transform View Controller-->
+        <scene sceneID="N6u-7O-ilx">
+            <objects>
+                <viewController storyboardIdentifier="TransformViewController" id="YgJ-f5-Vp2" customClass="TransformViewController" customModule="DemoImageWork" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="z7l-Uc-M5G">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Bwn-3F-yGC"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HPT-P1-qdy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8063" y="-6"/>
         </scene>
         <!--Core Image View Controller-->
         <scene sceneID="mvq-5R-otl">

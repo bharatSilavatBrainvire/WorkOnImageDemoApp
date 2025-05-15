@@ -72,6 +72,10 @@ extension AllOperationTypes: UITableViewDataSource, UITableViewDelegate {
             vc = self.storyboard?.instantiateViewController(withIdentifier: "UITestingVC")
         case .mask:
             vc = self.storyboard?.instantiateViewController(withIdentifier: "MaskViewController")
+        case .transform:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "TransformViewController")
+        case .metalKit:
+            vc = self.storyboard?.instantiateViewController(withIdentifier: "MetalKitBlendingVC")
         default:
             print("No VC assigned for \(selectedOperation.rawValue)")
         }

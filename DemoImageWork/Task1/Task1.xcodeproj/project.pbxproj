@@ -7,34 +7,32 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		A7259E982DD5CFFF00371CA3 /* Task1.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Task1.xcodeproj; sourceTree = "<group>"; };
-		A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoImageWork.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A7E53F6D2DD471C1004677C6 /* Task1.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = Task1.xcodeproj; sourceTree = "<group>"; };
+		A7E53F4B2DD471C0004677C6 /* Task1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Task1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		A73FAE9F2DCDFB630080F60B /* Exceptions for "DemoImageWork" folder in "DemoImageWork" target */ = {
+		A7E53F5D2DD471C1004677C6 /* Exceptions for "Task1" folder in "Task1" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
-			target = A73FAE8C2DCDFB610080F60B /* DemoImageWork */;
+			target = A7E53F4A2DD471C0004677C6 /* Task1 */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A73FAE8F2DCDFB610080F60B /* DemoImageWork */ = {
+		A7E53F4D2DD471C0004677C6 /* Task1 */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				A73FAE9F2DCDFB630080F60B /* Exceptions for "DemoImageWork" folder in "DemoImageWork" target */,
+				A7E53F5D2DD471C1004677C6 /* Exceptions for "Task1" folder in "Task1" target */,
 			);
-			path = DemoImageWork;
+			path = Task1;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A73FAE8A2DCDFB610080F60B /* Frameworks */ = {
+		A7E53F482DD471C0004677C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -44,32 +42,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A7259EBA2DD5CFFF00371CA3 /* Products */ = {
+		A7E53F422DD471C0004677C6 = {
 			isa = PBXGroup;
 			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A73FAE842DCDFB610080F60B = {
-			isa = PBXGroup;
-			children = (
-				A73FAE8F2DCDFB610080F60B /* DemoImageWork */,
-				A73FAE8E2DCDFB610080F60B /* Products */,
+				A7E53F4D2DD471C0004677C6 /* Task1 */,
+				A7E53F4C2DD471C0004677C6 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A73FAE8E2DCDFB610080F60B /* Products */ = {
+		A7E53F4C2DD471C0004677C6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		A7E53F6F2DD471C1004677C6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
+				A7E53F4B2DD471C0004677C6 /* Task1.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -77,74 +61,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A73FAE8C2DCDFB610080F60B /* DemoImageWork */ = {
+		A7E53F4A2DD471C0004677C6 /* Task1 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A73FAEA02DCDFB630080F60B /* Build configuration list for PBXNativeTarget "DemoImageWork" */;
+			buildConfigurationList = A7E53F5E2DD471C1004677C6 /* Build configuration list for PBXNativeTarget "Task1" */;
 			buildPhases = (
-				A73FAE892DCDFB610080F60B /* Sources */,
-				A73FAE8A2DCDFB610080F60B /* Frameworks */,
-				A73FAE8B2DCDFB610080F60B /* Resources */,
+				A7E53F472DD471C0004677C6 /* Sources */,
+				A7E53F482DD471C0004677C6 /* Frameworks */,
+				A7E53F492DD471C0004677C6 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A73FAE8F2DCDFB610080F60B /* DemoImageWork */,
+				A7E53F4D2DD471C0004677C6 /* Task1 */,
 			);
-			name = DemoImageWork;
+			name = Task1;
 			packageProductDependencies = (
 			);
-			productName = DemoImageWork;
-			productReference = A73FAE8D2DCDFB610080F60B /* DemoImageWork.app */;
+			productName = Task1;
+			productReference = A7E53F4B2DD471C0004677C6 /* Task1.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A73FAE852DCDFB610080F60B /* Project object */ = {
+		A7E53F432DD471C0004677C6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
 				LastUpgradeCheck = 1630;
 				TargetAttributes = {
-					A73FAE8C2DCDFB610080F60B = {
+					A7E53F4A2DD471C0004677C6 = {
 						CreatedOnToolsVersion = 16.3;
 					};
 				};
 			};
-			buildConfigurationList = A73FAE882DCDFB610080F60B /* Build configuration list for PBXProject "DemoImageWork" */;
+			buildConfigurationList = A7E53F462DD471C0004677C6 /* Build configuration list for PBXProject "Task1" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = A73FAE842DCDFB610080F60B;
+			mainGroup = A7E53F422DD471C0004677C6;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = A73FAE8E2DCDFB610080F60B /* Products */;
+			productRefGroup = A7E53F4C2DD471C0004677C6 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = A7E53F6F2DD471C1004677C6 /* Products */;
-					ProjectRef = A7E53F6D2DD471C1004677C6 /* Task1.xcodeproj */;
-				},
-				{
-					ProductGroup = A7259EBA2DD5CFFF00371CA3 /* Products */;
-					ProjectRef = A7259E982DD5CFFF00371CA3 /* Task1.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
-				A73FAE8C2DCDFB610080F60B /* DemoImageWork */,
+				A7E53F4A2DD471C0004677C6 /* Task1 */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		A73FAE8B2DCDFB610080F60B /* Resources */ = {
+		A7E53F492DD471C0004677C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -154,7 +128,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A73FAE892DCDFB610080F60B /* Sources */ = {
+		A7E53F472DD471C0004677C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -164,18 +138,19 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A73FAEA12DCDFB630080F60B /* Debug */ = {
+		A7E53F5F2DD471C1004677C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 27599AU3D6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoImageWork/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow app to access image to work upon";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow";
+				INFOPLIST_FILE = Task1/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow app to acess images";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please allow app to acess images";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -189,24 +164,26 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.DemoImageWork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
-		A73FAEA22DCDFB630080F60B /* Release */ = {
+		A7E53F602DD471C1004677C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 27599AU3D6;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = DemoImageWork/Info.plist;
-				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please Allow app to access image to work upon";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please Allow";
+				INFOPLIST_FILE = Task1/Info.plist;
+				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "Please allow app to acess images";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Please allow app to acess images";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -220,13 +197,14 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.testingProjectAll.DemoImageWork;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
-		A73FAEA32DCDFB630080F60B /* Debug */ = {
+		A7E53F612DD471C1004677C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -290,7 +268,7 @@
 			};
 			name = Debug;
 		};
-		A73FAEA42DCDFB630080F60B /* Release */ = {
+		A7E53F622DD471C1004677C6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -350,25 +328,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A73FAE882DCDFB610080F60B /* Build configuration list for PBXProject "DemoImageWork" */ = {
+		A7E53F462DD471C0004677C6 /* Build configuration list for PBXProject "Task1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A73FAEA32DCDFB630080F60B /* Debug */,
-				A73FAEA42DCDFB630080F60B /* Release */,
+				A7E53F612DD471C1004677C6 /* Debug */,
+				A7E53F622DD471C1004677C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A73FAEA02DCDFB630080F60B /* Build configuration list for PBXNativeTarget "DemoImageWork" */ = {
+		A7E53F5E2DD471C1004677C6 /* Build configuration list for PBXNativeTarget "Task1" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A73FAEA12DCDFB630080F60B /* Debug */,
-				A73FAEA22DCDFB630080F60B /* Release */,
+				A7E53F5F2DD471C1004677C6 /* Debug */,
+				A7E53F602DD471C1004677C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A73FAE852DCDFB610080F60B /* Project object */;
+	rootObject = A7E53F432DD471C0004677C6 /* Project object */;
 }
